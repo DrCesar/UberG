@@ -1,0 +1,15 @@
+.grid {
+	
+	height: 100%;
+}
+
+.column {
+
+	max-width: 450px;
+}
+
+.login-form {
+
+	background-image: url('background.jpg') !important;
+	background-size: cover !important;
+}
