@@ -1,0 +1,13 @@
+.homepage-grid {
+
+	height: 97%;
+	padding-top: 1% !important;
+	padding-right: 2% !important;
+	padding-left: 2% !important;
+}
+
+.main-div-homepage {
+
+	background-image: url('../../assets/images/background.jpg') !important;
+	background-size: cover !important;
+}

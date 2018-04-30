@@ -1,41 +1,37 @@
 
-import React, { Component } from 'react';
-import { Card, Image, Feed } from 'semantic-ui-react';
+import React, { Component, PropTypes } from 'react';
+import { Card, Button, Image, Icon } from 'semantic-ui-react';
+import faker from 'faker';
+
 
 
 class RideCard extends Component {
 	
-	render() {
+	propTypes: {
+		name: PropTypes.string.isRequired,
+		address: PropTypes.string,
+		time: PropTypes.string.isRequired,
+		location: PropTypes.string.isRequired,
+	};
 
-		console.log(this.props.date.toString());
+	render() {
 		return (
-			<Card fluid>
+			<Card  style={{ height: '100%' }}  fluid>							
+				<Image circular src={faker.image.imageUrl(400, 400, 'people')} />
 				<Card.Content>
-					<Image circular floated='left' size='mini' src={this.props.avatar} />
 					<Card.Header>{this.props.name}</Card.Header>
+					<Card.Meta>{this.props.address}</Card.Meta>
 				</Card.Content>
 				<Card.Content>
-					<Feed>
-				        <Feed.Event>
-				          	<Feed.Content>
-				           		<Feed.Summary>
-				              		{this.props.date.toString()}
-				            	</Feed.Summary>
-				          	</Feed.Content>
-				          	<Feed.Content>
-				           		<Feed.Summary>
-				              		{this.props.location}
-				            	</Feed.Summary>
-				          	</Feed.Content>
-				        </Feed.Event>
-				    </Feed>
+					<Card.Description><Icon name='star' />{this.props.time}</Card.Description>
+				</Card.Content>
+				<Card.Content>
+					<Card.Description><Icon name='id card' />{this.props.location}</Card.Description>
+					<Card.Description><Icon name='phone' />66513</Card.Description>
 				</Card.Content>
 			</Card>
 		);
 	}
-
 }
-
-
 
 export default RideCard;

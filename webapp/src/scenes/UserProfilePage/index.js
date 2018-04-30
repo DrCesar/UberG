@@ -1,7 +1,17 @@
 
-import { Component } from 'react';
-import { Segment, Grid, Card, Button, Icon, Image } from 'semantic-ui-react';
+import React, { Component } from 'react';
+import { Segment, Grid, Card,  Sticky, Image, Icon, Rail, Visibility } from 'semantic-ui-react';
 import faker from 'faker';
+import _ from 'lodash';
+
+
+import MainMenu from '../../components/MainMenu';
+
+
+import Review from './components/Review';
+
+
+import './index.css';
 
 
 const userInfo = (props) => ({
@@ -10,28 +20,62 @@ const userInfo = (props) => ({
 	rating: props && props.rating ? props.rating : faker.finance.amount(0,5,1),
 	uCard: props && props.uCard ? props.uCard : String(faker.random.number({min: 10, max:20})) + String(faker.random.number({min:100, max: 999})),
 	job: props && props.job ? props.job : faker.name.jobTitle(),
-	avatar: props && props.avatar ? props.avatar : faker.image.avatar(),
+	avatar: faker.image.imageUrl(400, 400, 'people'),
 });
 
 class UserProfilePage extends Component {
 	
 	componentWillMount() {
 		this.setState(userInfo(this.props));
+		this.setState({ reviews: this.genReviews() });
+	}
+
+	genReviews = () => {
+
+		return	_.times(10, () => (
+			<Review />
+		));
+	}
+
+	handleContextRef = (contextRef) => {
+		this.setState({ contextRef });
 	}
 
 	render() {
 
 		return (
-			<Segment className='user-form'>
-				<Grid container divided='vertically'>
-					<Grid.Column width={4}>
-						<Card fluid>							
-							<Card.Image circular src={this.state.info} />
-							<Card.Header>{this.state.name}</Card.Header>
-							<Card.Meta>{this.state.job}</Card.Meta>
-						</Card>
-					</Grid.Column>
-					<Grid.Column width={6}>
+			<Segment className='user-form' >
+				<style>{`
+			      	body > div,
+			     	body > div > div,
+			      	body > div > div > div.user-form {
+        				height: 100%;
+      				}
+    			`}</style>
+    			<MainMenu />
+				<Grid className='main-grid-user' style={{ height: '100%'}}  divided='vertically' >
+					<Grid.Column>
+						<div  ref={this.handleContextRef}>
+							<Rail className='user-card' position='left'>
+							<Sticky context={this.state.contextRef}>
+								<Card  style={{ height: '100%' }}  fluid>							
+									<Image circular src={this.state.avatar} />
+									<Card.Content>
+										<Card.Header>{this.state.name}</Card.Header>
+										<Card.Meta>{this.state.job}</Card.Meta>
+									</Card.Content>
+									<Card.Content>
+										<Card.Description><Icon name='star' />{this.state.rating}</Card.Description>
+									</Card.Content>
+									<Card.Content>
+										<Card.Description><Icon name='id card' />{this.state.uCard}</Card.Description>
+										<Card.Description><Icon name='phone' />{this.state.phone}</Card.Description>
+									</Card.Content>
+								</Card>
+							</Sticky>
+							</Rail>
+							{this.state.reviews}
+						</div>
 					</Grid.Column>
 				</Grid>
 			</Segment>

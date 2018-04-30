@@ -23,8 +23,8 @@ class UserSignPage extends Component {
         				height: 100%;
       				}
     			`}</style>
-				<Grid inverted textAlign='center' verticalAlign='middle'>
-					<Grid.Column >
+				<Grid style={{ height: '100%' }} inverted textAlign='center' verticalAlign='middle'>
+					<Grid.Column  style={{ maxWidth: '450px' }}>
 						<Form size='large'>
 						<Segment stacked>
 							<Header as='h2'>
