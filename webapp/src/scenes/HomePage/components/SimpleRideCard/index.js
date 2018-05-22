@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Card, Image, Feed } from 'semantic-ui-react';
+import { Card, Image, Feed, Header } from 'semantic-ui-react';
 
 
 class RideCard extends Component {
@@ -20,9 +20,9 @@ class RideCard extends Component {
 			<Card fluid>
 				<Card.Content onClick={this.handleUserClick}>
 					<Image circular floated='left' size='mini' src={this.props.avatar} />
-					<Card.Header>{this.props.name}</Card.Header>
+					<Card.Header><Header style={{ marginTop: '1%' }} >{this.props.name}</Header></Card.Header>
 				</Card.Content>
-				<Card.Content onClick={this.handleRideClick} style={{ backgroundColor: '#59be1b'}}>
+				<Card.Content color='gree' onClick={this.handleRideClick} >
 					<Feed>
 				        <Feed.Event>
 				          	<Feed.Content>

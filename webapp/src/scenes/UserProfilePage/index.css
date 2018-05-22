@@ -7,11 +7,18 @@
 .user-card {
 
 	width: 30% !important;
-	margin-top: 2% !important;
+	height: 90% !important;
 }
 
 .main-grid-user {
 
-	margin-left: 25% !important;
+	margin-left: 2% !important;
 	margin-right: 2% !important;
+	margin-top: 5% !important;
+	height: 85% !important;
+}
+
+.reviewsColumn {
+
+	overflow: auto;
 }

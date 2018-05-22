@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Segment, Grid, Card,  Sticky, Image, Icon, Rail, Visibility } from 'semantic-ui-react';
+import { Segment, Grid, Card,  Sticky, Image, Icon, Rail, Visibility, Button } from 'semantic-ui-react';
 import faker from 'faker';
 import _ from 'lodash';
 
@@ -53,8 +53,12 @@ class UserProfilePage extends Component {
       				}
     			`}</style>
     			<MainMenu />
-				<Grid className='main-grid-user' style={{ height: '100%'}}  divided='vertically' >
-					<Grid.Column>
+    			<Button animated floated='left' onClic={this.back} >
+    				<Button.Content visible>Back</Button.Content>
+    				<Button.Content hidden><Icon name='left arrow' /></Button.Content>
+    			</Button>
+				<Grid className='main-grid-user'  divided='vertically' >
+					{/*<Grid.Column>
 						<div  ref={this.handleContextRef}>
 							<Rail className='user-card' position='left'>
 							<Sticky context={this.state.contextRef}>
@@ -76,6 +80,26 @@ class UserProfilePage extends Component {
 							</Rail>
 							{this.state.reviews}
 						</div>
+					</Grid.Column>*/}
+
+					<Grid.Column width={4}>
+						<Card  style={{ height: '100%' }}  fluid>							
+							<Image circular src={this.state.avatar} />
+							<Card.Content>
+								<Card.Header>{this.state.name}</Card.Header>
+								<Card.Meta>{this.state.job}</Card.Meta>
+							</Card.Content>
+							<Card.Content>
+								<Card.Description><Icon name='star' />{this.state.rating}</Card.Description>
+							</Card.Content>
+							<Card.Content>
+								<Card.Description><Icon name='id card' />{this.state.uCard}</Card.Description>
+								<Card.Description><Icon name='phone' />{this.state.phone}</Card.Description>
+							</Card.Content>
+						</Card>
+					</Grid.Column>
+					<Grid.Column className='reviewsColumn' width={12}>
+						{this.state.reviews}
 					</Grid.Column>
 				</Grid>
 			</Segment>

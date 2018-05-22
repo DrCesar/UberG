@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
-import { Segment, Grid, Input, Button, Icon, Search, Image, Menu, Visibility } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
+import { Segment, Divider, Grid, Input, Button, Icon, Search, Image, Menu, Visibility } from 'semantic-ui-react';
 import faker from 'faker';
 import _ from 'lodash';
 
@@ -72,7 +73,11 @@ class HomePage extends Component {
 	handleRideClick = (rideInfo) => {
 		const rideCard = (
 			<div>
-				<Button colo='red' onClick={this.hideRidecard}><Icon name='arrow left'/></Button>
+				<Button animated floated='left' style={{ marginTop: '3%', marginBottom: '2%' }} size='large' color='red' onClick={this.hideRidecard}><Button.Content visible>Back</Button.Content>
+     				<Button.Content hidden>
+        				<Icon name='left arrow' />
+        			</Button.Content>
+        		</Button>
 				<RideCard {...rideInfo} />
 			</div>
 		);
@@ -99,8 +104,7 @@ class HomePage extends Component {
     			`}</style>
 				<MainMenu />
 				<Grid className='homepage-grid' divided='vertically'>
-					<Grid.Column width={6} >
-						<Segment style={{ overflow: 'scroll'}}>
+					<Grid.Column className='rideColumn' width={6} >
 							<Search fluid size='big'
 								loading = {isLoading}
 								onResultSelect = {this.handleResultSelect}
@@ -108,7 +112,6 @@ class HomePage extends Component {
 								results = {results}
 								value = {value} />
 							{info}
-						</Segment>
 					</Grid.Column>
 					<Grid.Column width={10}>
 						<MapComp />
@@ -120,4 +123,4 @@ class HomePage extends Component {
 }
 
 
-export default HomePage;
+export default withRouter(HomePage);

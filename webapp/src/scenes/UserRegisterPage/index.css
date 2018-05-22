@@ -1,12 +1,6 @@
 
-
-.login-form {
+.signup-form {
 
 	background-image: url('../../assets/images/background.jpg') !important;
 	background-size: cover !important;
-}
-
-.signin-header {
-
-	padding-bottom: 3% !important;
 }

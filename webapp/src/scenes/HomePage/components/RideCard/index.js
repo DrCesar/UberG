@@ -17,7 +17,7 @@ class RideCard extends Component {
 	render() {
 		return (
 			<Card  style={{ height: '100%' }}  fluid>							
-				<Image circular src={faker.image.imageUrl(400, 400, 'people')} />
+				<Image style={{ marginLeft: '10%', marginRight: '10%'}} circular src={faker.image.imageUrl(400, 400, 'people')} />
 				<Card.Content>
 					<Card.Header>{this.props.name}</Card.Header>
 					<Card.Meta>{this.props.address}</Card.Meta>
