@@ -7,14 +7,17 @@ import './index.css';
 
 class UserRegisterPage extends React.Component {
 	
-	setState = {
-		name: '',
-		email:  '',
+	state = {
+		fields: {
+			name: '',
+			email:  '',
+		}
 	}
 
 	onInputChange = (evt) => {
-		const field = evt.target.value;
-		this.setState({evt.target.name: field})
+		const fields = this.state.fields;
+		fields[evt.target.name] = evt.target.value
+		this.setState({ fields })
 	}
 	goBack = () => {
 		this.props.history.goBack();
@@ -22,7 +25,7 @@ class UserRegisterPage extends React.Component {
 
 	render() {
 
-		const { name, email } = this.state;
+		const { name, email } = this.state.fields;
 
 		return (
 			<Segment className='signup-form'>
@@ -45,10 +48,6 @@ class UserRegisterPage extends React.Component {
 										<label>Name</label>
 										<Input type='text' placeholder='Name' name='name' value={name} onChange={this.onInputChange} />
 									</Form.Field>
-									{/*<Form.Field>
-										<label>Last Name</label>
-										<Input type='text' placeholder='First anem' />
-									</Form.Field>*/}
 									<Form.Field>
 										<label>Email</label>
 										<Input type='email' placeholder='Email' name='email' value={email} onChange={this.onInputChange} />
@@ -61,7 +60,7 @@ class UserRegisterPage extends React.Component {
 										<label>Confirm Password</label>
 										<Input type='password' placeholder='Password' />
 									</Form.Field>
-									<Form.Group fluid style={{ marginTop: '6%' }}>
+									<Form.Group style={{ marginTop: '6%' }}>
 										<Form.Button fluid color='green' inverted>
 											Sign Up
 										</Form.Button>

@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import { Card, Image, Feed, Header } from 'semantic-ui-react';
+import { withRouter, Redirect } from 'react-router-dom';
 
 
 class RideCard extends Component {

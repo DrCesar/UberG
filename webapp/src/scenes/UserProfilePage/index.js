@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { Segment, Grid, Card,  Sticky, Image, Icon, Rail, Visibility, Button } from 'semantic-ui-react';
 import faker from 'faker';
 import _ from 'lodash';
@@ -35,10 +36,14 @@ class UserProfilePage extends Component {
 		return	_.times(10, () => (
 			<Review />
 		));
-	}
+	};
 
 	handleContextRef = (contextRef) => {
 		this.setState({ contextRef });
+	};
+
+	handleGoBack = () => {
+		this.props.history.push('/home');
 	}
 
 	render() {
@@ -53,34 +58,11 @@ class UserProfilePage extends Component {
       				}
     			`}</style>
     			<MainMenu />
-    			<Button animated floated='left' onClic={this.back} >
+    			<Button animated floated='left' onClic={this.back} className='backButton' onClick={this.handleGoBack}>
     				<Button.Content visible>Back</Button.Content>
     				<Button.Content hidden><Icon name='left arrow' /></Button.Content>
     			</Button>
 				<Grid className='main-grid-user'  divided='vertically' >
-					{/*<Grid.Column>
-						<div  ref={this.handleContextRef}>
-							<Rail className='user-card' position='left'>
-							<Sticky context={this.state.contextRef}>
-								<Card  style={{ height: '100%' }}  fluid>							
-									<Image circular src={this.state.avatar} />
-									<Card.Content>
-										<Card.Header>{this.state.name}</Card.Header>
-										<Card.Meta>{this.state.job}</Card.Meta>
-									</Card.Content>
-									<Card.Content>
-										<Card.Description><Icon name='star' />{this.state.rating}</Card.Description>
-									</Card.Content>
-									<Card.Content>
-										<Card.Description><Icon name='id card' />{this.state.uCard}</Card.Description>
-										<Card.Description><Icon name='phone' />{this.state.phone}</Card.Description>
-									</Card.Content>
-								</Card>
-							</Sticky>
-							</Rail>
-							{this.state.reviews}
-						</div>
-					</Grid.Column>*/}
 
 					<Grid.Column width={4}>
 						<Card  style={{ height: '100%' }}  fluid>							
@@ -107,4 +89,4 @@ class UserProfilePage extends Component {
 	}
 }
 
-export default UserProfilePage;
+export default withRouter(UserProfilePage);

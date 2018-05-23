@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { Segment, Divider, Grid, Input, Button, Icon, Search, Image, Menu, Visibility } from 'semantic-ui-react';
 import faker from 'faker';
 import _ from 'lodash';
@@ -36,10 +36,15 @@ class HomePage extends Component {
 		this.setState({ rides: this.genRides() })
 	}
 
+	handleUserClick = (info) => {
+		this.props.handleUserProfile(info);
+		this.props.history.push('/user')
+	}
+
 	genRides = () => {
 		return _.times(10, () => (
 			<SimpleRideCard
-				handleUserClick = {this.props.handleUserProfile}
+				handleUserClick = {this.handleUserClick}
 				handleRideClick = {this.handleRideClick}
 				key = {faker.random.uuid()}
 				name = {faker.name.findName()}

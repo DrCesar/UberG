@@ -33,7 +33,7 @@ class App extends Component {
             <div className='App'>
                 <Router>
                     <Switch>
-                        <Route exact path='user' render={() => (
+                        <Route exact path='/user' render={() => (
                             <UserProfilePage {...this.state.userInfo}/>
                         )}/>
                         <Route exact path='/home' render={() => (
