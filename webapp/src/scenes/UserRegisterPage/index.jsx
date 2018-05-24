@@ -99,11 +99,7 @@ class UserRegisterPage extends React.Component {
 										<label>Confirm Password</label>
 										<Input type='password' placeholder='Password' name = 'password2' value={password2} onChange={this.onInputChange}/>
 									</Form.Field>
-<<<<<<< Updated upstream
-
-=======
 									{ error && <p>{error.message}</p> }
->>>>>>> Stashed changes
 									<Form.Group style={{ marginTop: '6%' }}>
 										<Form.Button disabled={isInvalid} fluid color='green' inverted onClick={this.signup}>
 											Sign Up
