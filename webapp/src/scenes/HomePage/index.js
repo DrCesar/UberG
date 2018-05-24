@@ -13,7 +13,6 @@ import SimpleRideCard from './components/SimpleRideCard';
 import RideCard from './components/RideCard';
 import MapComp from '../../components/MapComponent';
 
-
 import './index.css'
 
 const genUsers = (name) => _.times(5, (name) => ({
@@ -52,9 +51,9 @@ class HomePage extends Component {
 				avatar = {faker.image.avatar()}
 				location = {faker.address.streetAddress("###")}
 			/>
-		));	
+		));
 	}
-	
+
 	resetComponent = () => {
 		this.setState({ isLoading: false, results: [], value: '' });
 	}
@@ -86,14 +85,13 @@ class HomePage extends Component {
 				<RideCard {...rideInfo} />
 			</div>
 		);
-		console.log('hola');
 		this.setState({ rideCard: rideCard, showCard: true });
 	}
 
 	render() {
 		const { isLoading, results, value, rides, rideCard, showCard } = this.state;
 		var info;
-		if (showCard) 
+		if (showCard)
 			info = rideCard;
 		else
 			info = rides;
@@ -120,7 +118,7 @@ class HomePage extends Component {
 					</Grid.Column>
 					<Grid.Column width={10}>
 						<MapComp />
-					</Grid.Column> 
+					</Grid.Column>
 				</Grid>
 			</Segment>
 		);

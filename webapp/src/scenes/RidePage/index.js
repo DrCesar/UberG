@@ -7,6 +7,8 @@ import './index.css'
 
 import MapComp from '../../components/MapComponent';
 import MainMenu from '../../components/MainMenu';
+import {firebase} from '../../firebase';
+import { db } from '../../firebase';
 
 
 const typeOfDestination = [
@@ -25,8 +27,7 @@ class RidePage extends Component {
 
 	state = {
 		fields: {
-			userName: '',
-			name: '',
+			description: '',
 			origin: '',
 			destiny: '',
 		},
@@ -34,21 +35,19 @@ class RidePage extends Component {
 		coming: true,
 		error: false,
 		ride: {
-			user: this.props.userId,
+			description: '',
 			origin: '',
 			destiny: '',
 			routing: false,
 		}
 	};
 
-	// componentDidMount() {
-	// 	const fields = this.state.fields;
-	// 	const user = searchUser(this.props.userId);
 
-	// 	console.log(user);
-	// 	fields.userName = user.name;
-	// 	this.setState({ fields: fields });
-	// }
+	getUserUid() {
+		firebase.auth.onAuthStateChanged(authUser => {
+			return authUser.uid;
+		})
+	}
 
 	onDestChange = (e, {value}) => {
 		const typeOfDest = value;
@@ -87,24 +86,43 @@ class RidePage extends Component {
 		this.setState({ fields: fields });
 	};
 
-	onSubmit = () => {
+	onSubmit = (event) => {
 		const ride = {
 			origin: this.state.fields.origin,
 			destiny: this.state.fields.destiny,
+			description: this.state.fields.description,
 			routing: true,
 		}
 
 		this.setState({ ride: ride });
-	};
 
-	handleAddressError = () => {
-		this.setState({ error: true })
+		var time = new Date();
+
+		var timeObj = {
+			year: time.getFullYear(),
+			month: time.getMonth(),
+			day: time.getDate(),
+			hour: time.getHours(),
+			minute: time.getMinutes()
+		}
+
+		firebase.auth.onAuthStateChanged(authUser => {
+			db.createRide(ride.description, ride.destiny, authUser.uid, ride.origin, timeObj)
+				.then(ride => {
+					this.setState({
+						fields: {
+							origin: '',
+							destiny: '',
+						}});
+				})
+		});
+
+		event.preventDefault();
 	}
-	
-	render() {
 
-		const { going, coming, fields, ride, error } = this.state;
-		const { origin, destiny, name, userName } = fields;
+	render() {
+		const { going, coming, fields, ride } = this.state;
+		const { origin, destiny, description } = fields;
 
 		return (
 			<Segment className='ride-form'>
@@ -123,19 +141,17 @@ class RidePage extends Component {
 								<Header as='h1'>
 									Post a Ride
 								</Header>
-								<Form.Input label='User' name='name' disabled value={userName}/>
-								<Form.Input label='Ride Name' placeholder='Name' name='name' value={name} onChange={this.onChange}/>
+								<Form.Input label='User' name='name' disabled value={this.props.userName}/>
+								<Form.Input label='Descripción' placeholder='Descripción' name = 'description' value={description} />
 								<Form.Dropdown placeholder='Type of Destination' onChange={this.onDestChange} selection options={typeOfDestination} />
-								<Form.Input label='Origin' name='origin' disabled={going} value={origin} onChange={this.onChange} />
-								<Form.Input label='Destination' name='destiny' disabled={coming} value={destiny} onChange={this.onChange} />
-								{ error? <Message negative>Bad Address</Message>
-									: ''}
+								<Form.Input label='Origen' name='origin' disabled={going} value={origin} onChange={this.onChange} />
+								<Form.Input label='Destino' name='destiny' disabled={coming} value={destiny} onChange={this.onChange} />
 								<Form.Button onClick={this.onSubmit} disabled={going && coming}>Submit</Form.Button>
 							</Form>
-						</Segment>	
+						</Segment>
 					</Grid.Column>
 					<Grid.Column width={10}>
-						<MapComp 
+						<MapComp
 							ride={ride}
 							handleAddressError={this.handleAddressError}
 						/>

@@ -25,7 +25,7 @@ const userInfo = (props) => ({
 });
 
 class UserProfilePage extends Component {
-	
+
 	componentWillMount() {
 		this.setState(userInfo(this.props));
 		this.setState({ reviews: this.genReviews() });
@@ -65,7 +65,7 @@ class UserProfilePage extends Component {
 				<Grid className='main-grid-user'  divided='vertically' >
 
 					<Grid.Column width={4}>
-						<Card  style={{ height: '100%' }}  fluid>							
+						<Card  style={{ height: '100%' }}  fluid>
 							<Image circular src={this.state.avatar} />
 							<Card.Content>
 								<Card.Header>{this.state.name}</Card.Header>

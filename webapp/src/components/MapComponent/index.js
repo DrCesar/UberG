@@ -29,8 +29,7 @@ const MapComponent = compose(
                         this.setState({
                             directions: result,
                         });
-                    } else {
-                        
+                    } else {    
                         this.props.handleAddressError();
                     }
                 });

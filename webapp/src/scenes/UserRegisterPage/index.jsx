@@ -94,15 +94,14 @@ class UserRegisterPage extends React.Component {
 									</Form.Field>
 									<Form.Field>
 										<label>Password</label>
-										<Input type='password' placeholder='Password' name = 'password' onChange={this.onInputChange}/>
+										<Input type='password' placeholder='Password' name = 'password' value={password} onChange={this.onInputChange}/>
 									</Form.Field>
 									<Form.Field>
 										<label>Confirm Password</label>
-										<Input type='password' placeholder='Password' name = 'password2' onChange={this.onInputChange}/>
+										<Input type='password' placeholder='Password' name = 'password2' value={password2} onChange={this.onInputChange}/>
 									</Form.Field>
-
+									{ error && <p>{error.message}</p> }
 									<Form.Group style={{ marginTop: '6%' }}>
-										{ error && <p>{error.message}</p> }
 										<Form.Button disabled={isInvalid} fluid color='green' inverted onClick={this.signup}>
 											Sign Up
 										</Form.Button>

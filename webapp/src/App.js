@@ -6,13 +6,24 @@ import UserRegisterPage from './scenes/UserRegisterPage';
 import HomePage from './scenes/HomePage';
 import UserProfilePage from './scenes/UserProfilePage';
 import RidePage from  './scenes/RidePage';
-
+import withAuthentication from './components/withAuthentication';
+import Navigation from './components/Navigation';
+import * as routes from './constants/routes';
+import { firebase } from './firebase';
 
 class App extends Component {
 
     state = {
         userInfo: {},
-        userId: '',
+        authUser: null,
+    }
+
+    componentDidMount() {
+      firebase.auth.onAuthStateChanged(authUser => {
+        authUser
+          ? this.setState(() => ({ authUser }))
+          : this.setState(() => ({ authUser: null }));
+      });
     }
 
 
@@ -55,8 +66,8 @@ class App extends Component {
                 </Router>
             </div>
         );
-        
+
     }
 }
 
-export default App;
+export default withAuthentication(App);
