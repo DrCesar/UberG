@@ -30,6 +30,7 @@ class UserSignPage extends Component {
 					password: '',
 					error: null
 				} }));
+		    this.props.handleUser('idUsuario');
 			this.props.history.push('/home');
 		  })
 		  .catch(error => {
@@ -78,7 +79,7 @@ class UserSignPage extends Component {
 							/>
 
 							{ error && <p>{error.message}</p> }
-							<Form.Button fluid inverted color='green' size='large' onClick={this.handleSignIn}>Login</Form.Button>
+							<Form.Button fluid inverted color='green' size='large' onClick={() => this.props.history.push('/home')}>Login</Form.Button>
 							<Form.Button fluid color='green' size='large' onClick={this.handleSignUp}>SignUp</Form.Button>
 						</Segment>
 						</Form>

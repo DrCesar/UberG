@@ -11,12 +11,10 @@ import RidePage from  './scenes/RidePage';
 class App extends Component {
 
     state = {
-        userInfo: {}
+        userInfo: {},
+        userId: '',
     }
 
-    // showHomePage = () => {
-    //     this.setState({ page: 'home' });
-    // }
 
     showUserProfilePage = (UserInfo) => {
         this.setState({ userInfo: UserInfo });
@@ -26,9 +24,13 @@ class App extends Component {
         this.setState({ rideInfo: rideInfo });
     }
 
+    handleUser =(userId) => {
+        this.setState({ userId: userId });
+    }
+
     render() {
 
-        const { page } = this.state;
+        const { userId } = this.state;
 
         return (
             <div className='App'>
@@ -47,7 +49,7 @@ class App extends Component {
                             <UserRegisterPage />
                         )}/>
                         <Route exact path='/ride' render={() => (
-                            <RidePage />
+                            <RidePage userId={userId} />
                         )}/>
                     </Switch>
                 </Router>

@@ -2,10 +2,10 @@
 import adminFirebase from 'firebase-admin';
 import User from '../models/user.model';
 
-var db = firebase.firestore();
+var db = adminFirebase.firestore();
 var usersRef = db.collection('users');
 
-exports.register = function(user) {
+const register = function(user) {
 
     db.runTransaction((tx) => {
         return tx.get(user.email).then(userDoc => {
@@ -25,7 +25,7 @@ exports.register = function(user) {
         
 }
 
-exports.signin = function(temp) {
+const signin = function(temp) {
 
     //var temp = new User(info);
     var userDoc = usersRef.doc(temp.email).get()
@@ -50,7 +50,7 @@ exports.signin = function(temp) {
         });
 }
 
-exports.searchUser = function(id) {
+const searchUser = function(id) {
 
     var userDoc = usersRef.doc(id).get()
         .then(doc => {
@@ -66,3 +66,6 @@ exports.searchUser = function(id) {
             };
         });
 }
+
+
+export { register, signin, searchUser }

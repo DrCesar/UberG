@@ -8,7 +8,7 @@ class User {
         this.name = data.name || '';
         this.email = data.email || '';
         this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
-        this.password = hashPassword(data.password);
+        this.password = this.hashPassword(data.password);
         this.created_at = data.created_at || new Date();
     }
 

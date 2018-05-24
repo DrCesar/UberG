@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Segment, Form, Button, Icon, Grid, Divider, Header } from 'semantic-ui-react';
+import { Segment, Form, Button, Icon, Grid, Divider, Header, Message } from 'semantic-ui-react';
 import faker from 'faker';
 import './index.css'
 
@@ -25,18 +25,30 @@ class RidePage extends Component {
 
 	state = {
 		fields: {
+			userName: '',
 			name: '',
 			origin: '',
 			destiny: '',
 		},
 		going: true,
 		coming: true,
+		error: false,
 		ride: {
+			user: this.props.userId,
 			origin: '',
 			destiny: '',
 			routing: false,
 		}
 	};
+
+	// componentDidMount() {
+	// 	const fields = this.state.fields;
+	// 	const user = searchUser(this.props.userId);
+
+	// 	console.log(user);
+	// 	fields.userName = user.name;
+	// 	this.setState({ fields: fields });
+	// }
 
 	onDestChange = (e, {value}) => {
 		const typeOfDest = value;
@@ -50,6 +62,7 @@ class RidePage extends Component {
 					fields: fields,
 					going: false,
 					coming: true,
+					error: false,
 				});
 				return;
 			}
@@ -61,6 +74,7 @@ class RidePage extends Component {
 					fields: fields,
 					going: true,
 					coming: false,
+					error: false,
 				});
 				return;
 			}
@@ -81,12 +95,16 @@ class RidePage extends Component {
 		}
 
 		this.setState({ ride: ride });
+	};
+
+	handleAddressError = () => {
+		this.setState({ error: true })
 	}
 	
 	render() {
 
-		const { going, coming, fields, ride } = this.state;
-		const { origin, destiny, name } = fields;
+		const { going, coming, fields, ride, error } = this.state;
+		const { origin, destiny, name, userName } = fields;
 
 		return (
 			<Segment className='ride-form'>
@@ -105,11 +123,13 @@ class RidePage extends Component {
 								<Header as='h1'>
 									Post a Ride
 								</Header>
-								<Form.Input label='User' name='name' disabled value={this.props.userName}/>
-								<Form.Input label='Name' placeholder='Name' value={name} />
+								<Form.Input label='User' name='name' disabled value={userName}/>
+								<Form.Input label='Ride Name' placeholder='Name' name='name' value={name} onChange={this.onChange}/>
 								<Form.Dropdown placeholder='Type of Destination' onChange={this.onDestChange} selection options={typeOfDestination} />
 								<Form.Input label='Origin' name='origin' disabled={going} value={origin} onChange={this.onChange} />
-								<Form.Input label='Destiny' name='destiny' disabled={coming} value={destiny} onChange={this.onChange} />
+								<Form.Input label='Destination' name='destiny' disabled={coming} value={destiny} onChange={this.onChange} />
+								{ error? <Message negative>Bad Address</Message>
+									: ''}
 								<Form.Button onClick={this.onSubmit} disabled={going && coming}>Submit</Form.Button>
 							</Form>
 						</Segment>	
@@ -117,6 +137,7 @@ class RidePage extends Component {
 					<Grid.Column width={10}>
 						<MapComp 
 							ride={ride}
+							handleAddressError={this.handleAddressError}
 						/>
 					</Grid.Column>
 				</Grid>

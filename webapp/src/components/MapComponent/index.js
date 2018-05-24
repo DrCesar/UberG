@@ -30,7 +30,8 @@ const MapComponent = compose(
                             directions: result,
                         });
                     } else {
-                        console.log(`error fetching directions ${result}`);
+                        
+                        this.props.handleAddressError();
                     }
                 });
             }

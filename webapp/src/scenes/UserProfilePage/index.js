@@ -58,7 +58,7 @@ class UserProfilePage extends Component {
       				}
     			`}</style>
     			<MainMenu />
-    			<Button animated floated='left' onClic={this.back} className='backButton' onClick={this.handleGoBack}>
+    			<Button animated floated='left' className='backButton' onClick={this.handleGoBack}>
     				<Button.Content visible>Back</Button.Content>
     				<Button.Content hidden><Icon name='left arrow' /></Button.Content>
     			</Button>
