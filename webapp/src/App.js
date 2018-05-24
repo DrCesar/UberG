@@ -5,6 +5,7 @@ import UserSignPage from './scenes/UserSignPage';
 import UserRegisterPage from './scenes/UserRegisterPage';
 import HomePage from './scenes/HomePage';
 import UserProfilePage from './scenes/UserProfilePage';
+import RidePage from  './scenes/RidePage';
 
 
 class App extends Component {
@@ -44,6 +45,9 @@ class App extends Component {
                         )}/>
                         <Route exact path='/register' render={() => (
                             <UserRegisterPage />
+                        )}/>
+                        <Route exact path='/ride' render={() => (
+                            <RidePage />
                         )}/>
                     </Switch>
                 </Router>

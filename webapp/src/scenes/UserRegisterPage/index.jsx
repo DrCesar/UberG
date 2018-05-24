@@ -60,7 +60,7 @@ class UserRegisterPage extends React.Component {
 										<label>Confirm Password</label>
 										<Input type='password' placeholder='Password' />
 									</Form.Field>
-									<Form.Group style={{ marginTop: '6%' }}>
+									<Form.Group style={{ marginTop: '6%' }} widths='equal'>
 										<Form.Button fluid color='green' inverted>
 											Sign Up
 										</Form.Button>

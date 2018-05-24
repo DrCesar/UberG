@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
-import { Segment, Divider, Grid, Input, Button, Icon, Search, Image, Menu, Visibility } from 'semantic-ui-react';
+import { Segment, Grid,  Button, Icon, Search, Image, Menu } from 'semantic-ui-react';
 import faker from 'faker';
 import _ from 'lodash';
 
