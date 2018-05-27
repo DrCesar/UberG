@@ -47,7 +47,6 @@ class UserRegisterPage extends React.Component {
 					password2: '',
 					error: null
 				} }));
-		    this.props.handleUser('idUsuario');
 			this.props.history.push('/');
 		  })
 		  .catch(error => {

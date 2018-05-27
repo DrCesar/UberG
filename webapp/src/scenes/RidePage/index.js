@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import { Segment, Form, Button, Icon, Grid, Divider, Header, Message } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
 import faker from 'faker';
 import './index.css'
 
@@ -116,7 +117,7 @@ class RidePage extends Component {
 						}});
 				})
 		});
-
+		this.props.history.push('/home');
 		event.preventDefault();
 	}
 
@@ -142,10 +143,11 @@ class RidePage extends Component {
 									Post a Ride
 								</Header>
 								<Form.Input label='User' name='name' disabled value={this.props.userName}/>
-								<Form.Input label='Descripción' placeholder='Descripción' name = 'description' value={description} />
+								<Form.Input label='Descripción' placeholder='Descripción' name = 'description' value={description} onChange={this.onChange} />
 								<Form.Dropdown placeholder='Type of Destination' onChange={this.onDestChange} selection options={typeOfDestination} />
 								<Form.Input label='Origen' name='origin' disabled={going} value={origin} onChange={this.onChange} />
 								<Form.Input label='Destino' name='destiny' disabled={coming} value={destiny} onChange={this.onChange} />
+								
 								<Form.Button onClick={this.onSubmit} disabled={going && coming}>Submit</Form.Button>
 							</Form>
 						</Segment>
@@ -162,4 +164,4 @@ class RidePage extends Component {
 	}
 }
 
-export default RidePage;
+export default withRouter(RidePage);
