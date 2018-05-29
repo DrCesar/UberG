@@ -29,8 +29,11 @@ export const getNameByUserId = (uid) =>
     db.collection('users').where('id_user','==',uid).get();
 
 export const getRidesByOrigin = (par) =>
-    db.collection('rides').where('origin','==',par).get();
+    db.collection('rides').where('origin','>=',par).get();
 
 export const getRidesByDestiny = (par) =>
     db.collection('rides').where('destiny','>=',par).get();
+
+export const getAllRides = () =>
+    db.collection('rides').get()
 // createRide('asdf', 'asdf', 'asdf', 'asdf', 'asdf');

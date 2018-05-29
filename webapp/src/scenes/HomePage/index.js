@@ -61,6 +61,38 @@ class HomePage extends Component {
 		this.newRides();
 	}
 
+	allRides() {
+		db.getAllRides().then(data => {
+			let rides = [];
+			let promisesArray = [];
+
+			data.forEach(doc => {
+				let rideData = doc.data();
+				// console.log(rideData.id_user);
+				promisesArray.push(db.getNameByUserId(rideData.id_user).then(user => {
+					let name;
+					user.forEach(userTemp => {
+						name = userTemp.data().name;
+					})
+					let obj = <SimpleRideCard
+						handleUserClick = {this.handleUserClick}
+						handleRideClick = {this.handleRideClick}
+						key = {doc.id}
+						name = {name}
+						date = {new Date(rideData.time.year, rideData.time.month, rideData.time.day, rideData.time.hour, rideData.time.minute)}
+						avatar = {faker.image.avatar()}
+						origin = {this.prettyString(rideData.origin)}
+						destiny = {this.prettyString(rideData.destiny)}
+					/>
+					rides.push(obj); 
+				}))
+			});
+			Promise.all(promisesArray).then(values => {
+				this.setState({rides: rides, isLoading: false})
+			})
+		})
+	}
+
 	newRides() {
 		var data = this.state.data;
 		var rides = [];
@@ -100,7 +132,8 @@ class HomePage extends Component {
 
 	componentWillMount() {
 		this.resetComponent();
-		this.setState({ rides: this.genRides() })
+		// this.setState({ rides: this.genRides() })
+		this.allRides();
 	}
 
 	handleUserClick = (info) => {
