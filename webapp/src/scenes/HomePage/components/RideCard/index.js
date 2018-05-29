@@ -6,17 +6,18 @@ import faker from 'faker';
 
 
 class RideCard extends Component {
-	
+
 	propTypes: {
 		name: PropTypes.string.isRequired,
 		address: PropTypes.string,
 		time: PropTypes.string.isRequired,
-		location: PropTypes.string.isRequired,
+		origin: PropTypes.string.isRequired,
+		destiny: PropTypes.string.isRequired,
 	};
 
 	render() {
 		return (
-			<Card  style={{ height: '100%' }}  fluid>							
+			<Card  style={{ height: '100%' }}  fluid>
 				<Image style={{ marginLeft: '10%', marginRight: '10%'}} circular src={faker.image.imageUrl(400, 400, 'people')} />
 				<Card.Content>
 					<Card.Header>{this.props.name}</Card.Header>

@@ -5,7 +5,7 @@ import { withRouter, Redirect } from 'react-router-dom';
 
 
 class RideCard extends Component {
-    
+
 
     handleRideClick = (evt) => {
         this.props.handleRideClick(this.props);
@@ -28,14 +28,14 @@ class RideCard extends Component {
                         <Feed.Event>
                             <Feed.Content>
                                 <Feed.Summary>
-                                    <Label> Origin: </Label> {this.props.location}
+                                    <Label> Origin: </Label> {this.props.origin}
                                 </Feed.Summary>
                             </Feed.Content>
                         </Feed.Event>
                         <Feed.Event>
                             <Feed.Content>
                                 <Feed.Summary>
-                                    <Label> Destiny: </Label> {this.props.location}
+                                    <Label> Destiny: </Label> {this.props.destiny}
                                 </Feed.Summary>
                             </Feed.Content>
                         </Feed.Event>

@@ -17,5 +17,20 @@ export const createRide = (description, destiny, id_user, origin, time) =>
         time: time
     });
 
+export const createUser = (uid, name) =>
+    db.collection('users').add({
+        id_user: uid,
+        isDriver: false,
+        name: name,
+        rating: 4
+    })
 
+export const getNameByUserId = (uid) =>
+    db.collection('users').where('id_user','==',uid).get();
+
+export const getRidesByOrigin = (par) =>
+    db.collection('rides').where('origin','==',par).get();
+
+export const getRidesByDestiny = (par) =>
+    db.collection('rides').where('destiny','>=',par).get();
 // createRide('asdf', 'asdf', 'asdf', 'asdf', 'asdf');

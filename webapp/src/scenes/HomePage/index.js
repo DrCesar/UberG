@@ -12,6 +12,8 @@ import MainMenu from '../../components/MainMenu';
 import SimpleRideCard from './components/SimpleRideCard';
 import RideCard from './components/RideCard';
 import MapComp from '../../components/MapComponent';
+import {firebase} from '../../firebase';
+import { db } from '../../firebase';
 
 import './index.css'
 
@@ -27,11 +29,77 @@ class HomePage extends Component {
 
 	state ={
 		showCard: false,
+		value: '',
+		data: null,
+		rides: null
+	}
+
+	prettyString(str) {
+		let newStr = "";
+		for (var i = 0; i < str.length; i++) {
+			if (i == 0) {
+				if (str.charCodeAt(i) > 96 && str.charCodeAt(i) < 123)
+					newStr += String.fromCharCode(str.charCodeAt(i)-32);
+				else
+					newStr += str.charAt(i)
+			} else if (str.charAt(i-1) == " ") {
+				if (str.charCodeAt(i) > 96 && str.charCodeAt(i) < 123)
+					newStr += String.fromCharCode(str.charCodeAt(i)-32);
+				else
+					newStr += str.charAt(i)
+			} else {
+				newStr += str.charAt(i)
+			}
+		}
+
+		return newStr;
+	}
+
+	showRides() {
+		// console.log(this.newRides());
+		// this.setState({ rides: this.newRides() })
+		this.newRides();
+	}
+
+	newRides() {
+		var data = this.state.data;
+		var rides = [];
+		let promisesArray = [];
+		data.forEach(doc => {
+			let rideData = doc.data();
+			promisesArray.push(db.getNameByUserId(rideData.id_user).then(user => {
+				let name;
+				user.forEach(user => {
+					name = user.data().name;
+				})
+				let obj = <SimpleRideCard
+					handleUserClick = {this.handleUserClick}
+					handleRideClick = {this.handleRideClick}
+					key = {doc.id}
+					name = {name}
+					date = {new Date(rideData.time.year, rideData.time.month, rideData.time.day, rideData.time.hour, rideData.time.minute)}
+					avatar = {faker.image.avatar()}
+					origin = {this.prettyString(rideData.origin)}
+					destiny = {this.prettyString(rideData.destiny)}
+				/>
+				rides.push(obj);
+			}));
+		})
+		Promise.all(promisesArray).then(values => {
+			this.setState({rides: rides, isLoading: false})
+		})
+	}
+
+	searchByOrigin = () => {
+		const origin = this.state.value;
+
+		db.getRidesByOrigin(origin).then (data => {
+			this.setState({data:data}, () => {this.showRides()});
+		})
 	}
 
 	componentWillMount() {
 		this.resetComponent();
-
 		this.setState({ rides: this.genRides() })
 	}
 
@@ -49,7 +117,8 @@ class HomePage extends Component {
 				name = {faker.name.findName()}
 				date = {faker.date.recent()}
 				avatar = {faker.image.avatar()}
-				location = {faker.address.streetAddress("###")}
+				origin = {faker.address.streetAddress("###")}
+				destiny = {faker.address.streetAddress("###")}
 			/>
 		));
 	}
@@ -63,11 +132,14 @@ class HomePage extends Component {
 	}
 
 	handleSearchChange = (e, { value }) => {
-		this.setState({ isLoading: true, value });
-
-		setTimeout(() => {
-			if (this.state.value.length < 1) return this.resetComponent();
-		})
+		this.setState({ isLoading: true, value: value }, () => {
+			if (this.state.value && this.state.value.length > 1) {
+				console.log(this.state.value)
+		    	this.searchByOrigin()
+		    } else {
+				this.setState({isLoading: false})
+			}
+		});
 	}
 
 	hideRidecard = () => {

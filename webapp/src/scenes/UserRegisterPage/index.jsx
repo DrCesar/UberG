@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { Divider, Button, Input, Grid, Segment, Form, Header } from 'semantic-ui-react';
 import './index.css';
 import { auth } from '../../firebase';
+import {firebase} from '../../firebase';
+import { db } from '../../firebase';
 
 
 class UserRegisterPage extends React.Component {
@@ -39,16 +41,18 @@ class UserRegisterPage extends React.Component {
 
 		auth.doCreateUserWithEmailAndPassword(email, password)
 		  .then(authUser => {
-		    this.setState(() => ({
-				fields: {
-					name: '',
-					email:  '',
-					password: '',
-					password2: '',
-					error: null
-				} }));
-			this.props.history.push('/');
-		  })
+			  db.createUser(authUser.uid, this.state.fields.name).then(user => {
+				    this.setState(() => ({
+						fields: {
+							name: '',
+							email:  '',
+							password: '',
+							password2: '',
+							error: null
+						} }));
+					this.props.history.push('/home');
+				  })
+			  })
 		  .catch(error => {
 		    this.setState({fields :{error: error}});
 		  });
